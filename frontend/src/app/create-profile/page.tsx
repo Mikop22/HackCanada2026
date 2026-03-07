@@ -33,37 +33,18 @@ const LIFESTYLES = [
   { label: "Takeout fan", emoji: "🥡" },
   { label: "Vegan / Veg", emoji: "🥗" },
   { label: "Foodie", emoji: "🍜" },
-  { label: "Coffee addict", emoji: "☕" },
   { label: "Pet friendly", emoji: "🐾" },
   { label: "Plant parent", emoji: "🪴" },
-  { label: "420 friendly", emoji: "🌿" },
   { label: "Non-smoker", emoji: "🚭" },
-  { label: "Teetotaler / Sober", emoji: "🥤" },
-  { label: "Wine lover", emoji: "🍷" },
   { label: "Fitness lover", emoji: "💪" },
   { label: "Gym rat", emoji: "🏋️" },
-  { label: "Runner", emoji: "🏃" },
-  { label: "Yogi", emoji: "🧘" },
   { label: "Outdoorsy", emoji: "🏕️" },
-  { label: "Sports fan", emoji: "🏀" },
   { label: "Gamer", emoji: "🎮" },
   { label: "Techie", emoji: "💻" },
   { label: "Movie buff", emoji: "🍿" },
-  { label: "Binge watcher", emoji: "📺" },
   { label: "Bookworm", emoji: "📖" },
   { label: "Musician", emoji: "🎸" },
-  { label: "Artist", emoji: "🎨" },
-  { label: "Photographer", emoji: "📷" },
   { label: "LGBTQ+ friendly", emoji: "🌈" },
-  { label: "Eco-friendly", emoji: "♻️" },
-  { label: "Astrology fan", emoji: "⭐" },
-  { label: "Christian", emoji: "✝️" },
-  { label: "Muslim", emoji: "☪️" },
-  { label: "Jewish", emoji: "✡️" },
-  { label: "Hindu", emoji: "🕉️" },
-  { label: "Buddhist", emoji: "☸️" },
-  { label: "Atheist / Agnostic", emoji: "🌌" },
-  { label: "Spiritual", emoji: "🔮" },
 ];
 
 const STEPS = [
@@ -702,8 +683,8 @@ function StepLifestyle({
   toggleLifestyle: (tag: string) => void;
 }) {
   return (
-    <motion.div variants={stagger} initial="enter" animate="center" className="space-y-4">
-      <motion.div variants={staggerChild} className="flex flex-wrap gap-3">
+    <motion.div variants={stagger} initial="enter" animate="center" className="space-y-4 w-full pb-4">
+      <motion.div variants={staggerChild} className="flex flex-wrap gap-3 w-full">
         {LIFESTYLES.map(({ label, emoji }) => {
           const selected = selectedLifestyles.includes(label);
           return (
@@ -1092,8 +1073,8 @@ export default function CreateProfilePage() {
         </div>
 
         {/* Form content */}
-        <div className="flex-1 flex flex-col px-[6%] xl:px-[8%] py-6 w-full overflow-y-auto">
-          <div className="flex-1 flex flex-col justify-center min-h-0">
+        <div className="flex-1 flex flex-col px-[6%] xl:px-[8%] py-6 w-full min-h-0">
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={step}
@@ -1103,7 +1084,7 @@ export default function CreateProfilePage() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-                className="flex flex-col"
+                className="flex flex-col flex-1 min-h-0 overflow-hidden"
               >
               {/* Step header */}
               <div className="mb-6 flex-shrink-0">
@@ -1121,7 +1102,7 @@ export default function CreateProfilePage() {
               </div>
 
                 {/* Step body */}
-                <div className="overflow-y-auto">
+                <div className="flex-1 min-h-0 overflow-y-auto pb-4">
                 {userType === "host" ? (
                   // Host flow: 2 steps (Basics, Finish)
                   step === 0 ? (
