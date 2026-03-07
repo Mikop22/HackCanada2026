@@ -26,13 +26,12 @@ export default function LandlordDashboardPage() {
     >
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-warm-gray/10">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+        <div className="px-6 lg:px-10 h-16 flex items-center justify-between">
           <Link
             href="/"
-            className="text-foreground tracking-tight text-xl"
-            style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
+            className="font-serif text-xs tracking-[0.25em] uppercase font-semibold text-foreground"
           >
-            Sublet-Me
+            SUBLET-<span className="text-accent">ME</span>
           </Link>
           <div className="flex items-center gap-4">
             {/* Notifications */}
@@ -163,21 +162,6 @@ export default function LandlordDashboardPage() {
           </Reveal>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-warm-gray/10 py-8">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 flex items-center justify-between">
-          <span
-            className="text-muted/40 text-sm"
-            style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
-          >
-            Sublet-Me
-          </span>
-          <span className="text-muted/30 text-xs">
-            Verified student housing for Canadian co-ops
-          </span>
-        </div>
-      </footer>
     </div>
   );
 }

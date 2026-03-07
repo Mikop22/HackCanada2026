@@ -57,13 +57,12 @@ export default function ListingDetailPage({
     >
       {/* Nav */}
       <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-warm-gray/10">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+        <div className="px-6 lg:px-10 h-16 flex items-center justify-between">
           <Link
             href="/"
-            className="text-foreground tracking-tight text-xl"
-            style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
+            className="font-serif text-xs tracking-[0.25em] uppercase font-semibold text-foreground"
           >
-            Sublet-Me
+            SUBLET-<span className="text-accent">ME</span>
           </Link>
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-orange-400 flex items-center justify-center text-white font-semibold text-sm cursor-pointer ring-2 ring-background shadow-sm">
             J

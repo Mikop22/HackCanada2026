@@ -36,15 +36,6 @@ export function LandlordListingCard({ listing }: { listing: Listing }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
-        {/* Status badge */}
-        <div
-          className={`absolute top-4 left-4 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
-            STATUS_STYLES[listing.status]
-          }`}
-        >
-          {STATUS_LABELS[listing.status]}
-        </div>
-
         {/* 3-dot menu */}
         <div className="absolute top-3 right-3">
           <button
