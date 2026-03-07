@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, use } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -538,9 +538,10 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-export default function ListingPage({ params }: { params: { id: string } }) {
+export default function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const id = parseInt(params.id, 10);
+  const { id: idParam } = use(params);
+  const id = parseInt(idParam, 10);
   const listing = LISTINGS[id];
   const [saved, setSaved] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
