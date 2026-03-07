@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { X, Paperclip, Calendar } from "lucide-react";
 import type { StudentMatch, Message } from "@/lib/landlord-mock";
 import { CONVERSATIONS } from "@/lib/landlord-mock";
