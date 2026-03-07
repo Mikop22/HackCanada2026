@@ -14,7 +14,7 @@ export default function Home() {
         <div className="pointer-events-auto">
           <Link
             className="bg-transparent text-foreground border border-warm-gray text-sm md:text-base font-semibold px-6 py-2.5 rounded-full hover:border-foreground/30 transition-colors cursor-pointer shadow-sm"
-            href="/api/auth/login?returnTo=/create-profile"
+            href="/login?returnTo=/create-profile"
           >
             Log in
           </Link>
