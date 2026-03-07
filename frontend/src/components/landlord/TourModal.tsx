@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { X } from "lucide-react";
 
 const TIMES = [
@@ -40,8 +40,7 @@ export function TourModal({
   const canProceed = validSlots.length >= 1;
 
   return (
-    <AnimatePresence>
-      <motion.div
+    <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -141,7 +140,6 @@ export function TourModal({
             </div>
           )}
         </motion.div>
-      </motion.div>
-    </AnimatePresence>
+    </motion.div>
   );
 }

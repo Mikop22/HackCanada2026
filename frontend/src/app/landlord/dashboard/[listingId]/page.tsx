@@ -32,6 +32,7 @@ export default function ListingDetailPage({
 
   const [activeChat, setActiveChat] = useState<number | null>(null);
   const [tourStudentId, setTourStudentId] = useState<number | null>(null);
+  const [pendingTourSlots, setPendingTourSlots] = useState<Record<number, string[]>>({});
 
   if (!listing) {
     return (
@@ -45,9 +46,7 @@ export default function ListingDetailPage({
   const tourStudent = matches.find((m) => m.id === tourStudentId) ?? null;
 
   const handleConfirmTour = (studentId: number, slots: string[]) => {
-    // In a real app: send slots to API, get Meet link back
-    // For now: open chat with that student so tour proposal bubble appears
-    console.log("Tour slots proposed for student", studentId, slots);
+    setPendingTourSlots((prev) => ({ ...prev, [studentId]: slots }));
     setActiveChat(studentId);
   };
 
@@ -182,6 +181,7 @@ export default function ListingDetailPage({
               onScheduleTour={() => {
                 setTourStudentId(activeStudent.id);
               }}
+              pendingTourSlots={activeStudent ? pendingTourSlots[activeStudent.id] : undefined}
             />
           </>
         )}
