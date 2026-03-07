@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import MagneticButton from "@/components/MagneticButton";
 
 // ————— Data —————
 const CITIES = [
@@ -956,7 +957,7 @@ export default function CreateProfilePage() {
             className="text-white/30 text-xs tracking-[0.25em] uppercase font-semibold hover:text-white/60 transition-colors"
             style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
           >
-            Sublet-Me
+            Sublet-<span className="text-accent">Me</span>
           </Link>
         </div>
 
@@ -965,29 +966,6 @@ export default function CreateProfilePage() {
           <AmbientPanel step={step} />
         </div>
 
-        {/* Bottom step counter */}
-        <div className="relative z-10 px-14">
-          <div className="flex items-center gap-3 text-white/20 text-xs">
-            <motion.span
-              key={step}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-accent font-mono font-semibold text-sm"
-            >
-              {String(step + 1).padStart(2, "0")}
-            </motion.span>
-            <div className="flex-1 h-px bg-white/[0.05] relative overflow-hidden">
-              <motion.div
-                className="absolute inset-y-0 left-0 bg-white/[0.1]"
-                animate={{ width: `${((step + 1) / totalSteps) * 100}%` }}
-                transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-              />
-            </div>
-            <span className="font-mono text-white/15">
-              {String(totalSteps).padStart(2, "0")}
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* ————— Right Panel: Form ————— */}
@@ -999,7 +977,7 @@ export default function CreateProfilePage() {
             className="lg:hidden font-serif text-xl text-foreground tracking-tight"
             style={{ fontFamily: "var(--font-dm-serif), Georgia, serif" }}
           >
-            Sublet-Me
+            Sublet-<span className="text-accent">Me</span>
           </Link>
           <Link
             href="/"
@@ -1136,62 +1114,36 @@ export default function CreateProfilePage() {
               Back
             </button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={step === totalSteps - 1 ? handleSubmit : goNext}
-              disabled={isSubmitting}
-              className={`relative font-semibold rounded-full text-base cursor-pointer overflow-hidden min-w-[170px] transition-all duration-300 ${step === totalSteps - 1
-                ? "bg-accent text-white px-8 py-4 shadow-[0_8px_30px_rgba(232,93,74,0.25)] hover:shadow-[0_12px_40px_rgba(232,93,74,0.35)]"
-                : "bg-foreground text-surface px-8 py-4 hover:bg-foreground/90"
-                } disabled:opacity-60 disabled:cursor-not-allowed`}
-            >
-              <AnimatePresence mode="wait">
-                {isSubmitting ? (
+            {isSubmitting ? (
+              <motion.button
+                disabled
+                className="relative font-semibold rounded-full text-base cursor-not-allowed overflow-hidden min-w-[170px] bg-accent text-white px-8 py-4 shadow-[0_8px_30px_rgba(232,93,74,0.25)] opacity-60"
+              >
+                <motion.div className="flex items-center justify-center gap-2.5">
                   <motion.div
-                    key="spin"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="flex items-center justify-center gap-2.5"
-                  >
-                    <motion.div
-                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 0.7,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
-                    Creating...
-                  </motion.div>
-                ) : (
-                  <motion.span
-                    key="label"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="flex items-center justify-center gap-2"
-                  >
-                    {step === totalSteps - 1 ? "Create profile" : "Continue"}
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.button>
+                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 0.7,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  Creating...
+                </motion.div>
+              </motion.button>
+            ) : (
+              <MagneticButton
+                onClick={step === totalSteps - 1 ? handleSubmit : goNext}
+                className={`font-semibold rounded-full text-base cursor-pointer min-w-[170px] transition-all duration-300 ${
+                  step === totalSteps - 1
+                    ? "bg-accent text-white px-8 py-4 shadow-[0_8px_30px_rgba(232,93,74,0.25)] hover:shadow-[0_12px_40px_rgba(232,93,74,0.35)]"
+                    : "bg-foreground text-surface px-8 py-4 hover:bg-foreground/90"
+                }`}
+              >
+                {step === totalSteps - 1 ? "Create profile" : "Continue"}
+              </MagneticButton>
+            )}
           </div>
         </div>
       </div>

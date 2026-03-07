@@ -72,27 +72,26 @@ export function ChatPanel({
   pendingTourSlots?: string[];
 }) {
   const conversationKey = `${listingId}-${student.id}`;
-  const existingMessages = CONVERSATIONS[conversationKey] ?? [];
-  const tourProposal: Message[] =
-    pendingTourSlots && pendingTourSlots.length > 0
-      ? [
-          {
-            id: Date.now(),
-            senderId: "landlord" as const,
-            text: "I'm available at these times — pick one that works!",
-            timestamp: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            type: "tour-proposal" as const,
-            tourSlots: pendingTourSlots,
-          },
-        ]
-      : [];
-  const [messages, setMessages] = useState<Message[]>([
-    ...existingMessages,
-    ...tourProposal,
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const existingMessages = CONVERSATIONS[conversationKey] ?? [];
+    const tourProposal: Message[] =
+      pendingTourSlots && pendingTourSlots.length > 0
+        ? [
+            {
+              id: Date.now(),
+              senderId: "landlord" as const,
+              text: "I'm available at these times — pick one that works!",
+              timestamp: new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              }),
+              type: "tour-proposal" as const,
+              tourSlots: pendingTourSlots,
+            },
+          ]
+        : [];
+    return [...existingMessages, ...tourProposal];
+  });
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
