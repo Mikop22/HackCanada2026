@@ -78,10 +78,15 @@ Frontend uses Next.js BFF routes for orchestrator calls:
 
 - `POST /api/subletops/profile`
 - `POST /api/subletops/turn`
+- `GET /api/subletops/turn` (history hydration)
 - `POST /api/subletops/matches`
 
 These routes read Auth0 session context server-side and forward requests to the
 FastAPI backend at `SUBLETOPS_BACKEND_URL`.
+
+Chatbot UI route:
+
+- `/assistant` (Auth0-gated in middleware)
 
 For local development, you can register both callback URLs:
 
