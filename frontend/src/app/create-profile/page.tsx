@@ -61,6 +61,10 @@ const STEPS = [
     subtitle: "Pick tags that describe your living style.",
   },
   {
+    title: "What kind of renter\nare you looking for?",
+    subtitle: "Pick tags that describe your ideal tenant.",
+  },
+  {
     title: "One last\nthing",
     subtitle: "Add a photo and bio to complete your profile.",
   },
@@ -353,6 +357,7 @@ const PANEL_MOODS = [
 
 const PANEL_MOODS_HOST = [
   { greeting: "Hello.", accent: "#E85D4A", secondary: "#F4A261", tagline: "Let's get your listing ready for students." },
+  { greeting: "Who fits?", accent: "#F4A261", secondary: "#A8B5A0", tagline: "Tell us about your ideal renter." },
   { greeting: "Almost there.", accent: "#E85D4A", secondary: "#A8B5A0", tagline: "One photo and a few words. Then you're in." },
 ];
 
@@ -785,6 +790,9 @@ function StepFinish({
             {bio.length}/300
           </div>
         </div>
+        <p className="text-xs text-muted/60 mt-2 leading-relaxed">
+          Anything we need to know? We don't share this with landlords—we use this to help find you the optimal place.
+        </p>
       </motion.div>
 
       {/* Mobile-only preview */}
@@ -915,10 +923,16 @@ export default function CreateProfilePage() {
     if (userType === "host") {
       return [
         STEPS[0], // Basics
-        STEPS[3], // Finish
+        STEPS[4], // Renter preferences (landlord lifestyle)
+        STEPS[5], // Finish
       ];
     }
-    return STEPS; // All 4 steps for tenants
+    return [
+      STEPS[0], // Basics
+      STEPS[1], // Location
+      STEPS[2], // Lifestyle (tenant)
+      STEPS[5], // Finish
+    ];
   };
 
   const activeSteps = getSteps();
@@ -979,9 +993,12 @@ export default function CreateProfilePage() {
   // Validation function to check if current step is complete
   const isStepValid = () => {
     if (userType === "host") {
-      // Hosts: step 0 = Basics, step 1 = Finish
+      // Hosts: step 0 = Basics, step 1 = Renter preferences, step 2 = Finish
       if (step === 0) {
         return name.trim().length > 0 && email.trim().length > 0;
+      }
+      if (step === 1) {
+        return selectedLifestyles.length > 0; // At least one preference selected
       }
       return true; // Finish step - bio and avatar are optional
     }
@@ -1130,7 +1147,7 @@ export default function CreateProfilePage() {
                 {/* Step body */}
                 <div className="flex-1 min-h-0 overflow-y-auto pb-4">
                 {userType === "host" ? (
-                  // Host flow: 2 steps (Basics, Finish)
+                  // Host flow: 3 steps (Basics, Renter Preferences, Finish)
                   step === 0 ? (
                     <StepBasics
                       name={name}
@@ -1141,6 +1158,11 @@ export default function CreateProfilePage() {
                       setUserType={setUserType}
                       company={company}
                       setCompany={setCompany}
+                    />
+                  ) : step === 1 ? (
+                    <StepLifestyle
+                      selectedLifestyles={selectedLifestyles}
+                      toggleLifestyle={toggleLifestyle}
                     />
                   ) : (
                     <StepFinish
