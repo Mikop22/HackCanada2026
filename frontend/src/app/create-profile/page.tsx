@@ -815,7 +815,9 @@ function StepFinish({
 }
 
 // ————— Success Screen —————
-function SuccessScreen({ name }: { name: string }) {
+function SuccessScreen({ name, userType }: { name: string; userType: "tenant" | "host" | "" }) {
+  const dashboardPath = userType === "host" ? "/landlord/dashboard" : "/dashboard";
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface relative overflow-hidden">
       {/* Celebration effects */}
@@ -874,7 +876,7 @@ function SuccessScreen({ name }: { name: string }) {
           transition={{ delay: 0.7 }}
         >
           <Link
-            href="/dashboard"
+            href={dashboardPath}
             className="inline-flex items-center gap-2 bg-foreground text-surface font-semibold px-8 py-4 rounded-full hover:bg-foreground/90 transition-colors cursor-pointer"
             style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
           >
@@ -976,7 +978,7 @@ export default function CreateProfilePage() {
   };
 
   if (isComplete) {
-    return <SuccessScreen name={name} />;
+    return <SuccessScreen name={name} userType={userType} />;
   }
 
   return (
