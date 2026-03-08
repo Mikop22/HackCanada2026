@@ -998,7 +998,7 @@ export default function CreateProfilePage() {
     if (userType === "host") {
       // Hosts: step 0 = Basics, step 1 = Finish
       if (step === 0) {
-        return name.trim().length > 0 && email.trim().length > 0 && userType !== "";
+        return name.trim().length > 0 && email.trim().length > 0;
       }
       return true; // Finish step - bio and avatar are optional
     }
@@ -1258,8 +1258,14 @@ export default function CreateProfilePage() {
               </motion.button>
             ) : (
               <MagneticButton
-                onClick={step === totalSteps - 1 ? handleSubmit : goNext}
-                disabled={!isStepValid()}
+                onClick={() => {
+                  if (!isStepValid()) return;
+                  if (step === totalSteps - 1) {
+                    void handleSubmit();
+                    return;
+                  }
+                  goNext();
+                }}
                 className={`font-semibold rounded-full text-base min-w-[170px] transition-all duration-300 ${
                   !isStepValid() ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
                 } ${

@@ -619,6 +619,12 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-4">
             <Link
+              href="/assistant"
+              className="text-xs font-medium text-muted hover:text-foreground transition-colors"
+            >
+              Assistant
+            </Link>
+            <Link
               href="/api/auth/logout"
               className="text-xs font-medium text-muted hover:text-foreground transition-colors"
             >
