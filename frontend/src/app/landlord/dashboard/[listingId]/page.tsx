@@ -96,10 +96,13 @@ export default function ListingDetailPage({
               {listing.status.charAt(0).toUpperCase() + listing.status.slice(1)}
             </span>
           </div>
-          <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-warm-gray/15 text-sm text-muted hover:bg-warm-gray/8 transition-colors">
+          <Link
+            href={`/landlord/dashboard/${listingId}/edit`}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-warm-gray/15 text-sm text-muted hover:bg-warm-gray/8 transition-colors"
+          >
             <Pencil className="w-3.5 h-3.5" />
             Edit
-          </button>
+          </Link>
         </div>
       </div>
 
