@@ -76,7 +76,10 @@ async function createThread(assistantId: string): Promise<string> {
 async function sendMessage(threadId: string, content: string): Promise<string> {
   const res = await fetch(`${BB_BASE}/threads/${threadId}/messages`, {
     method: "POST",
-    headers: { "X-API-Key": process.env.BACKBOARD_API_KEY! },
+    headers: {
+      "X-API-Key": process.env.BACKBOARD_API_KEY!,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: new URLSearchParams({
       content,
       memory: "Auto",
@@ -105,7 +108,7 @@ async function uploadVideo(
           reject(error ?? new Error("Cloudinary upload returned no result"));
           return;
         }
-        resolve({ publicId: result.public_id, duration: result.duration ?? 0 });
+        resolve({ publicId: result.public_id, duration: result.duration ?? 30 });
       }
     );
     uploadStream.end(videoBuffer);
@@ -341,6 +344,7 @@ export async function runVideoPipeline(
 
     // 1. Upload video
     const { publicId, duration } = await uploadVideo(videoBuffer);
+    const safeDuration = duration > 0 ? duration : 30;
 
     // 2. Generate highlight URL
     const highlightUrl = getHighlightUrl(publicId);
@@ -353,7 +357,7 @@ export async function runVideoPipeline(
 
     for (let round = 1; round <= MAX_ROUNDS; round++) {
       // Extract & tag frames
-      const frames = await extractFrames(publicId, duration, numFrames);
+      const frames = await extractFrames(publicId, safeDuration, numFrames);
 
       // Curate
       const curatorResult = await curateFrames(
@@ -379,7 +383,7 @@ export async function runVideoPipeline(
         reviewerId,
         frames,
         curatorResult,
-        duration
+        safeDuration
       );
 
       rounds.push({ round, numFrames, frames, curatorResult, reviewResult });

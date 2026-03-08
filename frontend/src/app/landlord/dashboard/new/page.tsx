@@ -238,6 +238,7 @@ export default function NewListingPage() {
                     <button
                       type="button"
                       onClick={() => {
+                        if (videoPreview) URL.revokeObjectURL(videoPreview);
                         setVideoPreview(null);
                         setVideo(null);
                         if (videoInputRef.current) videoInputRef.current.value = "";

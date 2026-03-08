@@ -14,6 +14,14 @@ export async function POST(req: Request) {
       return Response.json({ error: "Missing video field" }, { status: 400 });
     }
 
+    const MAX_SIZE = 500 * 1024 * 1024; // 500 MB
+    if (video.size > MAX_SIZE) {
+      return Response.json({ error: "Video exceeds 500 MB limit" }, { status: 400 });
+    }
+    if (!video.type.startsWith("video/")) {
+      return Response.json({ error: "File must be a video" }, { status: 400 });
+    }
+
     const title = formData.get("title") as string;
     const address = formData.get("address") as string;
     const city = (formData.get("city") as string) ?? "Toronto";
@@ -31,9 +39,14 @@ export async function POST(req: Request) {
     const referencesRequired =
       (formData.get("referencesRequired") as string) === "true";
     const lifestyleTagsRaw = formData.get("lifestyleTags") as string | null;
-    const lifestyleTags: string[] = lifestyleTagsRaw
-      ? JSON.parse(lifestyleTagsRaw)
-      : [];
+    let lifestyleTags: string[] = [];
+    if (lifestyleTagsRaw) {
+      try {
+        lifestyleTags = JSON.parse(lifestyleTagsRaw);
+      } catch {
+        return Response.json({ error: "Invalid lifestyleTags format" }, { status: 400 });
+      }
+    }
 
     await connectDB();
 
