@@ -600,7 +600,6 @@ export default function DashboardPage() {
     window.location.assign("/auth/logout");
   };
 
-  const topPicks = LISTINGS.filter((l) => l.match >= 90).sort(
   const topPicks = recommendedListings.filter((l) => l.match >= 90).sort(
     (a, b) => b.match - a.match
   );
