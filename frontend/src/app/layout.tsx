@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
-
-const fraunces = Fraunces({
-  variable: "--font-dm-serif",
-  subsets: ["latin"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Sublet-Me — The #1 Sublet Network for Canadian Co-op Students",
@@ -25,9 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${fraunces.variable} ${inter.variable} antialiased bg-background text-foreground font-sans`}
-      >
+      <body className="antialiased bg-background text-foreground font-sans">
         <div className="grain" />
         {children}
       </body>
