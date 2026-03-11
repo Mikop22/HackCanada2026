@@ -413,7 +413,13 @@ function AIStudioPageContent() {
 
 export default function AIStudioPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background flex items-center justify-center text-muted">
+          Loading AI studio...
+        </div>
+      }
+    >
       <AIStudioPageContent />
     </Suspense>
   );

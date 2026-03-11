@@ -24,8 +24,10 @@ export async function connectDB(): Promise<typeof mongoose> {
     throw new Error("Missing MONGODB_URI in environment variables");
   }
 
+  const mongoUri = MONGODB_URI;
+
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
+    cached.promise = mongoose.connect(mongoUri, {
       bufferCommands: false,
     });
   }
