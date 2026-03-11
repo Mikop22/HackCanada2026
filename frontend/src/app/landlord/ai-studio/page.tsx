@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -140,7 +140,7 @@ function CompareSlider({
 }
 
 // ————— Main Page —————
-export default function AIStudioPage() {
+function AIStudioPageContent() {
   const searchParams = useSearchParams();
   const preFilterListingId = searchParams.get("listingId");
 
@@ -408,5 +408,13 @@ export default function AIStudioPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AIStudioPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <AIStudioPageContent />
+    </Suspense>
   );
 }
